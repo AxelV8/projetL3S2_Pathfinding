@@ -24,6 +24,7 @@ distM[x,y] = 0
 return distM
 end 
 
+#= take two nodes as a tuple and return the weight of the second node=#
 function weight_transition(map::Matrix{Char}, c1::Tuple{Int64,Int64}, c2::Tuple{Int64,Int64})
 	A::Char = map[c2[1],c2[2]]
 	if (A == '.')  return 1 
@@ -35,6 +36,7 @@ function weight_transition(map::Matrix{Char}, c1::Tuple{Int64,Int64}, c2::Tuple{
 	end
 end
 
+#= take two nodes as a tuple and update the distance beetween may start_Node and my t2_Node =#
 function dist_update(t1::Tuple{Int64,Int64}, t2::Tuple{Int64,Int64}, distM::Matrix{Int64},pq, parent_Matrix::Matrix{Tuple{Int64,Int64}}, map::Matrix{Char})
 		
 
@@ -43,22 +45,24 @@ function dist_update(t1::Tuple{Int64,Int64}, t2::Tuple{Int64,Int64}, distM::Matr
 		distM[t2[1],t2[2]] = distM[t1[1],t1[2]] + weight_transition(map,t1,t2)
 		
 		parent_Matrix[t2[1],t2[2]] = t1
-		
-		enqueue!(pq,t2,distM[t2[1],t2[2]])
+		#= enqueue! at the beginning but I change because when you have to put a Node again in the priority_queue with a lower distance, it fail. push replace the actual node and cahnge the priority=#
+		push!(pq,t2 => distM[t2[1],t2[2]])
 	end
 end 
 
 #= Une fois que dijsktra est fini on a notre parent_matrice qui est good avec les distances on va chercher le plus court chemin cette fois avec la fun qui renvoi un vecteur de node =#
 
+#= Once I m on my end_Node with the updated distance I just go up my parent_Matrix and put all nodes in a Vector
+	then I will create a graphic interface to Display my map with the path=#
 
- function min_path(path::Vector{Tuple{Int64,Int64}}, start_Node::Tuple{Int64,Int64}, end_Node::Tuple{Int64,Int64}, parent_Matrix::Matrix{Tuple{Int64,Int64}},map::Matrix{Char})
+function min_path(path::Vector{Tuple{Int64,Int64}}, start_Node::Tuple{Int64,Int64}, end_Node::Tuple{Int64,Int64}, parent_Matrix::Matrix{Tuple{Int64,Int64}},map::Matrix{Char})
 	
 	map[end_Node[1],end_Node[2]] = 'F'	
 
 	pushfirst!(path,end_Node)
 	node::Tuple{Int64,Int64} = parent_Matrix[end_Node[1],end_Node[2]]
-
-	println(node)
+	
+	
 
 	while (node != start_Node) 
 		
@@ -72,12 +76,12 @@ end
 	map[start_Node[1],start_Node[2]] = 'D' 
 	
 	pushfirst!(path,start_Node)
-	println(path)
+	#=println(path)=#
 	return path
 	
 end
 
-
+#= Main function=#
 function dijkstra(map::Matrix{Char}, passage_Matrix::Matrix{Bool}, s_deb::Tuple{Int64,Int64}, s_fin::Tuple{Int64,Int64}, pq, parent_Matrix::Matrix{Tuple{Int64,Int64}}, path::Vector{Tuple{Int64,Int64}}, distM::Matrix{Int64} )
 
   distM::Matrix{Int64} = Initialisation(map,s_deb[1],s_deb[2])
@@ -129,7 +133,8 @@ function dijkstra(map::Matrix{Char}, passage_Matrix::Matrix{Bool}, s_deb::Tuple{
 
 min_path(path, s_deb, s_fin, parent_Matrix,map)
 
-println("La plus petite distance entre s_deb et s_fin est"," ", distM[s_fin[1],s_fin[2]])
+println("The lowest path that you should take is"," ", distM[s_fin[1],s_fin[2]])
+return parent_Matrix
  
 end
 
