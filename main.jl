@@ -1,9 +1,9 @@
 include("dijkstra.jl")
-
 include("convertion.jl")
+include("getImage.jl")
 
 function main()
-map::Matrix{Char} = convertion_F_M("divideandconquer.map")
+map::Matrix{Char} = convertion_F_M("theglaive.map")
  
 
 #= weight of my character for [.,G,@,O,T,S,V] and create it =#
@@ -31,14 +31,16 @@ path::Vector{Tuple{Int64,Int64}} = []
 distM::Matrix{Int64} = Matrix{Int64}(undef,size(map,1),size(map,2))
 
 #Pair of point=#
-s_deb::Tuple{Int64,Int64} = (49,64)
-s_fin::Tuple{Int64,Int64} = (450,450)
+s_deb::Tuple{Int64,Int64} = (50,250)
+s_fin::Tuple{Int64,Int64} = (400,400)
 
 
 dijkstra(map,passage_Matrix, s_deb, s_fin, pq, parent_Matrix, path, distM)
 
-	
-	
+Image::Matrix{Vector{Int64}} = Matrix{Vector{Int64}}(undef,size(map,1),size(map,2))
+
+
+imshow(converte_M_I(map,Image,Color))
 
 end
 
