@@ -1,6 +1,6 @@
 function convertion_F_M(map::String)
-
-open(map,"r") do io
+test = "map/"*map
+open(test,"r") do io
 	v::Vector{String} = readlines(io)
  
 	height::Int64= parse(Int64,split(v[2], " ")[2])
@@ -21,14 +21,4 @@ open(map,"r") do io
 end
 end
 
-function converte_M_V_F(map::Matrix{Char})
-	V::Vector{String} = []
-	for i in 1:size(map,1), j in 1:size(map,2)
-	
-		V[i][j] = map[i,j]
-	end 
 
-	open("test.map","w")
-		write(tmp,V)
-	close(tmp)
-end
