@@ -14,10 +14,10 @@ _To launch the project:_
 That should give you the shortest distance beetween those two points and how many points were traited.  
 Finally It will display this type of map:  
 - Tree in green  
-- accessible zone in beige  
-- unacessible zone in black  
+- Accessible zone in beige  
+- Unacessible zone in black  
 - Water in blue  
-- shortest path in red  
-- traited points in purple  
+- Shortest path in red  
+- Traited points in purple  
 ![theglaive_(50,250)_(400,380)_a_star](https://user-images.githubusercontent.com/101639883/224395368-5b167381-c368-40a9-aff9-e51ca5770dc4.png)  
 theglaive_(50,250)_(400,380) with A*  
