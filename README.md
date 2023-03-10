@@ -19,4 +19,4 @@ Finally It will display this type of map:
 - Water in blue
 - shortest path in red
 - traited points in purple
-![Berlin_0_1024_(16,42)_(981,982)_a_star](https://user-images.githubusercontent.com/101639883/224394094-fec16611-8cac-48bf-82ae-d240a9d05a6d.png)
+![theglaive_(50,250)_(400,380)_a_star](https://user-images.githubusercontent.com/101639883/224395368-5b167381-c368-40a9-aff9-e51ca5770dc4.png)
