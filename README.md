@@ -2,7 +2,7 @@
 
 This is one of my last project during my third years of Bachelor's degree . I studied the problem of pathfinding, mentioned in particular in AI as well as operational research. In this approach to obtain the shortest path.  
 
-I had to study Dijsktra and A*, two resolution algorithms, with numerical instances as lines of character representing a map.  
+I had to study Dijkstra and A*, two resolution algorithms, with numerical instances as lines of character representing a map.  
 -----------------------------------------------------------------------------------------------------------
 _To launch the project:_
    - The file conversion.jl contains a parser to convert a file in the map folder.   
