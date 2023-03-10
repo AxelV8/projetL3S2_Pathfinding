@@ -15,7 +15,7 @@ That should give you the shortest distance beetween those two points and how man
 Finally It will display this type of map:  
 - Tree in green  
 - accessible zone in beige  
-- uncassible zone in black  
+- unacessible zone in black  
 - Water in blue  
 - shortest path in red  
 - traited points in purple  
