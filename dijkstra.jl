@@ -53,9 +53,9 @@ function dist_update(t1::Tuple{Int64,Int64}, t2::Tuple{Int64,Int64}, distM::Matr
 		
 		push!(pq,t2 => distM[t2[1],t2[2]])
 		
-		return 1
+		
 	end
-	return 0
+	
 end 
 
 #= Une fois que dijsktra est fini on a notre parent_matrice qui est good avec les distances on va chercher le plus court chemin cette fois avec la fun qui renvoi un vecteur de node =#
@@ -69,29 +69,20 @@ function min_path(path::Vector{Tuple{Int64,Int64}}, start_Node::Tuple{Int64,Int6
 	pushfirst!(path,end_Node)
 	node::Tuple{Int64,Int64} = parent_Matrix[end_Node[1],end_Node[2]]
 	
-	
-
 	while (node != start_Node) 
 		
-		
 		pushfirst!(path,node)
-		
-		
-		#= don't change your char_Matrix =#
-		
-		
 		node = parent_Matrix[node[1],node[2]]
 	end
-	 
-	
+
 	pushfirst!(path,start_Node)
-	#=println(path)=#
+	
 	return path
 	
 end
 
 #= Main function=#
-function dijkstra(map::Matrix{Char}, passage_Matrix::Matrix{Bool}, s_deb::Tuple{Int64,Int64}, s_fin::Tuple{Int64,Int64}, pq, parent_Matrix::Matrix{Tuple{Int64,Int64}}, path::Vector{Tuple{Int64,Int64}}, distM::Matrix{Int64}, nodes_visitées::Vector{Tuple{Int64,Int64}}, nbEtat::Int64)
+function dijkstra(map::Matrix{Char}, passage_Matrix::Matrix{Bool}, s_deb::Tuple{Int64,Int64}, s_fin::Tuple{Int64,Int64}, pq, parent_Matrix::Matrix{Tuple{Int64,Int64}}, path::Vector{Tuple{Int64,Int64}}, distM::Matrix{Int64}, nodes_visitées::Vector{Tuple{Int64,Int64}})
 
   distM::Matrix{Int64} = Initialisation(map,s_deb[1],s_deb[2])
 
@@ -122,36 +113,31 @@ function dijkstra(map::Matrix{Char}, passage_Matrix::Matrix{Bool}, s_deb::Tuple{
 	if  (s1[1]+1 <= size(map,1) && map[s1[1]+1,s1[2]] != '@' && map[s1[1]+1,s1[2]] != 'O' 
              && map[s1[1]+1,s1[2]] != 'T' && passage_Matrix[s1[1]+1,s1[2]] != 1) 
 
-		nbEtat += dist_update(s1,(s1[1]+1,s1[2]) , distM, pq, parent_Matrix, map, nodes_visitées)
+		dist_update(s1,(s1[1]+1,s1[2]) , distM, pq, parent_Matrix, map, nodes_visitées)
 		
 	end
     
 	if  (s1[1]-1 > 0 && map[s1[1]-1,s1[2]] != '@' && map[s1[1]-1,s1[2]] != 'O' && map[s1[1]-1,s1[2]] != 'T' 
          && passage_Matrix[s1[1]-1,s1[2]] != 1)
 		
-        	nbEtat += dist_update(s1,(s1[1]-1,s1[2]), distM, pq, parent_Matrix, map, nodes_visitées)
+        	dist_update(s1,(s1[1]-1,s1[2]), distM, pq, parent_Matrix, map, nodes_visitées)
 		
 	end
     
         if (s1[2]+1 <= size(map,2) && map[s1[1],s1[2]+1] != '@' && map[s1[1],s1[2]+1] != 'O'
             && map[s1[1],s1[2]+1] != 'T' && passage_Matrix[s1[1],s1[2]+1] != 1) 
 		
-        	nbEtat += dist_update(s1,(s1[1],s1[2]+1), distM, pq, parent_Matrix, map, nodes_visitées)
+        	dist_update(s1,(s1[1],s1[2]+1), distM, pq, parent_Matrix, map, nodes_visitées)
 		
 	end
     
     	if (s1[2]-1 > 0 && map[s1[1],s1[2]-1] != '@' && map[s1[1],s1[2]-1] != 'O' && map[s1[1],s1[2]-1] != 'T'
             && passage_Matrix[s1[1],s1[2]-1] != 1)
 		
-        	nbEtat += dist_update(s1,(s1[1],s1[2]-1), distM,pq, parent_Matrix, map, nodes_visitées)
+        	dist_update(s1,(s1[1],s1[2]-1), distM,pq, parent_Matrix, map, nodes_visitées)
 		
 	end
-	#= checker aussi si les voisins sont des caracteres out of bound @ 0 T 
-		la on regarde pour ses voisins (x+1)< size(map,1) (x-1)>0 (y+1)<size(map,2) (y-1)>0, 
-		on check si les x et y ne sont pas hors de la matrice comme au dessus,
-	=#
 
-	#=si on est bon alors on appel la fun maj_distances(node1[s1.x,s1.y],node2[x+1,y]) et on fait ca pour tout les 		voisins	On revient au debut de la boucle tant que, etc.... =#
 #= end of while=#
   end
 
@@ -159,7 +145,7 @@ min_path(path, s_deb, s_fin, parent_Matrix,map)
 
 println("The lowest path that you should take is"," ", distM[s_fin[1],s_fin[2]])
 println(length(nodes_visitées)," "," nodes were traited during the algorithm")
-println(nbEtat," ", "Etat ouvert")
+
 return nodes_visitées
  
 end
