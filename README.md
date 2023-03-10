@@ -20,3 +20,4 @@ Finally It will display this type of map:
 - shortest path in red
 - traited points in purple
 ![theglaive_(50,250)_(400,380)_a_star](https://user-images.githubusercontent.com/101639883/224395368-5b167381-c368-40a9-aff9-e51ca5770dc4.png)
+theglaive_(50,250)_(400,380) with A*
