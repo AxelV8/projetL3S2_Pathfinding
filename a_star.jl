@@ -43,24 +43,28 @@ end
 
 
 #= take two nodes as a tuple and update the distance beetween may start_Node and my t2_Node =#
-function dist_update(t1::Tuple{Int64,Int64}, t2::Tuple{Int64,Int64}, distM::Matrix{Int64},pq, parent_Matrix::Matrix{Tuple{Int64,Int64}}, map::Matrix{Char}, nodes_visitées::Vector{Tuple{Int64,Int64}}, s_fin::Tuple{Int64,Int64})
+function dist_update(t1::Tuple{Int64,Int64}, t2::Tuple{Int64,Int64}, distM::Matrix{Int64},pq, parent_Matrix::Matrix{Tuple{Int64,Int64}}, map::Matrix{Char}, nodes_visitées::Matrix{Bool}, s_fin::Tuple{Int64,Int64})
 		
-	
+	acc::Int64 = 0
 	if distM[t2[1],t2[2]] > distM[t1[1],t1[2]] + weight_transition(map,t1,t2)
 		
 		distM[t2[1],t2[2]] = distM[t1[1],t1[2]] + weight_transition(map,t1,t2)
 		
 		parent_Matrix[t2[1],t2[2]] = t1
-	 	pushfirst!(nodes_visitées, t2)	
+		if( nodes_visitées[t2[1],t2[2]] == false)
+			nodes_visitées[t2[1],t2[2]] = true
+			acc += 1
+		end
+	 	#=pushfirst!(nodes_visitées, t2)=#	
 		
 		#= enqueue! at the beginning but I change because when you have to put a Node again in the 
 		priority_queue with a lower distance, it fail. push replace the actual node and cahnge the priority=#
 		
 		push!(pq,t2 => distM[t2[1],t2[2]] + Manhattan_h(t2,s_fin))
 		
-		return 1
+		
 	end
-	return 0
+	return acc
 end 
 
 #= Une fois que a_star est fini on a notre parent_matrice qui est good avec les distances on va chercher le plus court chemin cette fois avec la fun qui renvoi un vecteur de node =#
@@ -88,7 +92,7 @@ function min_path(path::Vector{Tuple{Int64,Int64}}, start_Node::Tuple{Int64,Int6
 end
 
 #= Main function=#
-function a_star(map::Matrix{Char}, passage_Matrix::Matrix{Bool}, s_deb::Tuple{Int64,Int64}, s_fin::Tuple{Int64,Int64}, pq, parent_Matrix::Matrix{Tuple{Int64,Int64}}, path::Vector{Tuple{Int64,Int64}}, distM::Matrix{Int64}, nodes_visitées::Vector{Tuple{Int64,Int64}})
+function a_star(map::Matrix{Char}, passage_Matrix::Matrix{Bool}, s_deb::Tuple{Int64,Int64}, s_fin::Tuple{Int64,Int64}, pq, parent_Matrix::Matrix{Tuple{Int64,Int64}}, path::Vector{Tuple{Int64,Int64}}, distM::Matrix{Int64}, nodes_visitées::Matrix{Bool}, acc_nodes::Int64)
 
   distM::Matrix{Int64} = Initialisation(map,s_deb[1],s_deb[2])
 
@@ -100,7 +104,7 @@ function a_star(map::Matrix{Char}, passage_Matrix::Matrix{Bool}, s_deb::Tuple{In
   #=On commence la boucle:=#
   s1::Tuple{Int64,Int64} = (0,0)
   
-  while (passage_Matrix[s_fin[1],s_fin[2]] != 1)
+  while (passage_Matrix[s_fin[1],s_fin[2]] != 1 || empty!(pq))
 
 	s1 =  dequeue!(pq)
 		
@@ -111,34 +115,35 @@ function a_star(map::Matrix{Char}, passage_Matrix::Matrix{Bool}, s_deb::Tuple{In
 	 
 		 passage_Matrix[s1[1],s1[2]] = 1
 	
- 	#=si le passage_matrix[s1[1],s1[2]] a son passage a false alors on le met a vrai=# 
+ 	#=si le passage_matrix[s1[1],s1[2]] a son passage a false alors on le met a vrai=#
+	#Check des voisins dans le sens des aiguilles d'une montre en partant de la gauche=# 
 	#= modif le robot n est pas tarzan: ajouter comme condition si la node est un Tree je le check pas =#	
     
-	if  (s1[1]+1 <= size(map,1) && map[s1[1]+1,s1[2]] != '@' && map[s1[1]+1,s1[2]] != 'O' 
-             && map[s1[1]+1,s1[2]] != 'T' && passage_Matrix[s1[1]+1,s1[2]] != 1) 
+	if  (s1[1]-1 > 0 && map[s1[1]-1,s1[2]] != '@' && map[s1[1]-1,s1[2]] != 'O' 
+             && map[s1[1]-1,s1[2]] != 'T' && passage_Matrix[s1[1]-1,s1[2]] != 1) 
 
-		dist_update(s1,(s1[1]+1,s1[2]) , distM, pq, parent_Matrix, map, nodes_visitées, s_fin)
+		acc_nodes += dist_update(s1,(s1[1]-1,s1[2]) , distM, pq, parent_Matrix, map, nodes_visitées, s_fin)
 		
 	end
     
-	if  (s1[1]-1 > 0 && map[s1[1]-1,s1[2]] != '@' && map[s1[1]-1,s1[2]] != 'O' && map[s1[1]-1,s1[2]] != 'T' 
-         && passage_Matrix[s1[1]-1,s1[2]] != 1)
+	if  (s1[2]-1 > 0 && map[s1[1],s1[2]-1] != '@' && map[s1[1],s1[2]-1] != 'O' && map[s1[1],s1[2]-1] != 'T' 
+         && passage_Matrix[s1[1],s1[2]-1] != 1)
 		
-        	dist_update(s1,(s1[1]-1,s1[2]), distM, pq, parent_Matrix, map, nodes_visitées, s_fin)
-		
-	end
-    
-        if (s1[2]+1 <= size(map,2) && map[s1[1],s1[2]+1] != '@' && map[s1[1],s1[2]+1] != 'O'
-            && map[s1[1],s1[2]+1] != 'T' && passage_Matrix[s1[1],s1[2]+1] != 1) 
-		
-        	dist_update(s1,(s1[1],s1[2]+1), distM, pq, parent_Matrix, map, nodes_visitées, s_fin)
+        	acc_nodes += dist_update(s1,(s1[1],s1[2]-1), distM, pq, parent_Matrix, map, nodes_visitées, s_fin)
 		
 	end
     
-    	if (s1[2]-1 > 0 && map[s1[1],s1[2]-1] != '@' && map[s1[1],s1[2]-1] != 'O' && map[s1[1],s1[2]-1] != 'T'
-            && passage_Matrix[s1[1],s1[2]-1] != 1)
+        if (s1[1]+1 <= size(map,1) && map[s1[1]+1,s1[2]] != '@' && map[s1[1]+1,s1[2]] != 'O'
+            && map[s1[1]+1,s1[2]] != 'T' && passage_Matrix[s1[1]+1,s1[2]] != 1) 
 		
-        	 dist_update(s1,(s1[1],s1[2]-1), distM,pq, parent_Matrix, map, nodes_visitées, s_fin)
+        	acc_nodes += dist_update(s1,(s1[1]+1,s1[2]), distM, pq, parent_Matrix, map, nodes_visitées, s_fin)
+		
+	end
+    
+    	if (s1[2]+1 <= size(map,2) && map[s1[1],s1[2]+1] != '@' && map[s1[1],s1[2]+1] != 'O' && map[s1[1],s1[2]+1] != 'T'
+            && passage_Matrix[s1[1],s1[2]+1] != 1)
+		
+        	acc_nodes +=  dist_update(s1,(s1[1],s1[2]+1), distM,pq, parent_Matrix, map, nodes_visitées, s_fin)
 		
 	end
 
@@ -149,7 +154,7 @@ function a_star(map::Matrix{Char}, passage_Matrix::Matrix{Bool}, s_deb::Tuple{In
 min_path(path, s_deb, s_fin, parent_Matrix,map)
 
 println("The lowest path that you should take is"," ", distM[s_fin[1],s_fin[2]])
-println(length(nodes_visitées)," "," nodes were traited during the algorithm")
+println(acc_nodes," "," nodes were traited during the algorithm")
 return nodes_visitées
  
 end
