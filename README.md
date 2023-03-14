@@ -6,9 +6,8 @@ I had to study Dijkstra and A*, two resolution algorithms, with numerical instan
 -----------------------------------------------------------------------------------------------------------
 _To launch the project:_
    - The file conversion.jl contains a parser to convert a file in the map folder.   
-- Include the main.jl file in the REPL.  
-- Then launch the main function with the main parameter(“filename”, start_point , end_point).  (type of point:      Tuple{Int64,Int64})     
-- You will have the choice beetween what do you want to run. (D or A)
+- Include  dijkstra.jl and a_star.jl in the REPL.  
+- Then launch algoDijkstra and algoAstar within the arguments(“filename”, start_point , end_point).  (type of  point: Tuple{Int64,Int64})     
 ----------------------------------------------------------------------------------------------------------------
 
 That should give you the shortest distance beetween those two points and how many points were traited.  
@@ -18,6 +17,7 @@ Finally It will display this type of map:
 - Unacessible zone in black  
 - Water in blue  
 - Shortest path in red  
-- Traited points in purple  
-![theglaive_(50,250)_(400,380)_a_star](https://user-images.githubusercontent.com/101639883/224395368-5b167381-c368-40a9-aff9-e51ca5770dc4.png)  
+- Visited zone in purple  
+![theglaive_(50,250)_(400,380)_Astar](https://user-images.githubusercontent.com/101639883/225160668-ec8050bb-92ac-4f9a-a5a2-3a6c53a31e6f.png)
 theglaive_(50,250)_(400,380) with A*  
+
