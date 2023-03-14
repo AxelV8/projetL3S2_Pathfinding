@@ -8,7 +8,7 @@ _To launch the project:_
    - The file conversion.jl contains a parser to convert a file in the map folder. 
    - I'm using PyPlot and DataStructures packages
 - Include  dijkstra.jl and a_star.jl in the REPL.  
-- Then launch algoDijkstra and algoAstar within the arguments(“filename”, start_point , end_point).  (type of  point: Tuple{Int64,Int64})     
+- Then launch algoDijkstra and algoAstar with (“filename”, start_point , end_point) as parameters.  (type of  point: Tuple{Int64,Int64})     
 ----------------------------------------------------------------------------------------------------------------
 
 That should give you the shortest distance beetween those two points and how many points were traited.  
