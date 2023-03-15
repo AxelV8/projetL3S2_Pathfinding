@@ -28,5 +28,6 @@ Finally It will display this type of map:
 - Shortest path in red  
 - Visited zone in purple  
 ![theglaive_(50,250)_(400,380)_Astar](https://user-images.githubusercontent.com/101639883/225160668-ec8050bb-92ac-4f9a-a5a2-3a6c53a31e6f.png)
+
 theglaive_(50,250)_(400,380) with A*  
 
