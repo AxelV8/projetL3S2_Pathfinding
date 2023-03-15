@@ -7,8 +7,16 @@ I had to study Dijkstra and A*, two resolution algorithms, with numerical instan
 _To launch the project:_
    - The file conversion.jl contains a parser to convert a file in the map folder. 
    - I'm using PyPlot and DataStructures packages
-- Include  dijkstra.jl and a_star.jl in the REPL.  
-- Then launch algoDijkstra and algoAstar with (“filename”, start_point , end_point) as parameters.  (type of  point: Tuple{Int64,Int64})     
+```julia
+   Include("dijkstra.jl") 
+   Include("a_star.jl")
+   
+   algoDijkstra(“filename”, start_point , end_point)
+   algoAstar(“filename”, start_point , end_point)
+```
+   (type of  stat_point and end_point: Tuple{Int64,Int64}) 
+   
+   
 ----------------------------------------------------------------------------------------------------------------
 
 That should give you the shortest distance beetween those two points and how many points were traited.  
