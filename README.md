@@ -19,7 +19,7 @@ _To launch the project:_
 ```julia
    algoAstar(“filename”, start_point , end_point)
 ```
-   (type of  stat_point and end_point: Tuple{Int64,Int64}) 
+   (type of  start_point and end_point: Tuple{Int64,Int64}) 
    
    
 ----------------------------------------------------------------------------------------------------------------
