@@ -5,7 +5,7 @@ This is one of my last project during my third years of Bachelor's degree . I st
 I had to study Dijkstra and A*, two resolution algorithms, with numerical instances as lines of character representing a map.  
 -----------------------------------------------------------------------------------------------------------
 _To launch the project:_
-   - The file conversion.jl contains a parser to convert a file in the map folder. 
+   - The file conversion.jl contains a parser to convert a file in the map folder in dat. 
    - I'm using PyPlot and DataStructures packages
 ```julia
    Include("dijkstra.jl")
