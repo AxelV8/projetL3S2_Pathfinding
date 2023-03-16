@@ -8,10 +8,10 @@ _To launch the project:_
    - The file conversion.jl contains a parser to convert a file in the map folder in dat. 
    - I'm using PyPlot and DataStructures packages
 ```julia
-   Include("dijkstra.jl")
+   include("dijkstra.jl")
 ```
 ```julia
-   Include("a_star.jl")
+   include("a_star.jl")
 ``` 
 ```julia
    algoDijkstra(“filename”, start_point , end_point)
