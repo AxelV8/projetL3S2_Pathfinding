@@ -168,7 +168,7 @@ pq = PriorityQueue{Tuple{Int64,Int64}, Int64}()
 parent_Matrix::Matrix{Tuple{Int64,Int64}} = Matrix{Tuple{Int64,Int64}}(undef,size(map,1),size(map,2))
 
 
-#= My path that I will return with dijkstra=#
+#= My path that I will return with a_star=#
 path::Vector{Tuple{Int64,Int64}} = []
 
 #= Distance matrix=#
