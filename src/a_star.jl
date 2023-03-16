@@ -141,7 +141,7 @@ min_path(path, s_deb, s_fin, parent_Matrix,map)
 
 
 println("The lowest path that you should take is"," ", distM[s_fin[1],s_fin[2]])
-println(acc_nodes," "," nodes were traited during the algorithm","\n")
+println(acc_nodes," "," nodes were visited during the algorithm","\n")
 println("Here is the time of my Astar algorithm without the display of my Image:")
 #= Useless here, I should remove the return =#
 return visited_nodes
